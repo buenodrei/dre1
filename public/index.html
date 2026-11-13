@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Support Autopilot</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<main class="wrap" id="loading"><p class="hint">Loading…</p></main>
+
+<main class="wrap login" id="loginView" hidden>
+  <header class="brand">
+    <h1>Support Autopilot</h1>
+    <p>Log in to the inbox your Shopify customers write to. Customer emails get an AI reply. Everything else in the inbox is left alone.</p>
+  </header>
+  <form class="panel form" id="loginForm">
+    <div class="field">
+      <span class="label" id="provLabel">Email provider</span>
+      <div class="seg wrapseg" id="providers" role="group" aria-labelledby="provLabel"></div>
+    </div>
+    <div class="field"><label class="label" for="lEmail">Email address</label><input id="lEmail" type="email" autocomplete="username" required placeholder="support@yourstore.com"></div>
+    <div class="field"><label class="label" for="lPass">App password</label><input id="lPass" type="password" autocomplete="current-password" required>
+      <p class="hint" id="provHelp"></p></div>
+    <div class="two" id="customHosts" hidden>
+      <div class="field"><label class="label" for="lImap">IMAP server</label><input id="lImap" placeholder="imap.example.com"></div>
+      <div class="field"><label class="label" for="lSmtp">SMTP server</label><input id="lSmtp" placeholder="smtp.example.com"></div>
+    </div>
+    <p class="error" id="loginError" role="alert" hidden></p>
+    <div class="actions"><button class="btn primary" type="submit" id="loginBtn">Log in</button></div>
+    <p class="hint">Your password is checked with your email provider, then saved encrypted on this server so the inbox can be watched while you're away. Only email that arrives after you log in is answered.</p>
+  </form>
+</main>
+
+<main class="wrap" id="appView" hidden>
+  <header class="top">
+    <div class="brand">
+      <h1 id="storeTitle">Support Autopilot</h1>
+      <p><span id="acctEmail"></span> · <span id="checked"></span></p>
+    </div>
+    <div class="topright">
+      <div class="mode">
+        <span class="label" id="modeLabel">When a customer emails</span>
+        <div class="seg" role="group" aria-labelledby="modeLabel">
+          <button type="button" id="modeAuto" aria-pressed="false">Reply automatically</button>
+          <button type="button" id="modeDraft" aria-pressed="true">Draft for my approval</button>
+        </div>
+      </div>
+      <div class="actions"><button type="button" class="btn" id="checkNow">Check inbox now</button><button type="button" class="btn" id="logout">Log out</button></div>
+    </div>
+  </header>
+
+  <div id="notices"></div>
+
+  <section class="strip" aria-label="Summary">
+    <div class="stat"><b id="sTotal">0</b><span>customer emails</span></div>
+    <div class="stat"><b id="sSent">0</b><span>answered</span></div>
+    <div class="stat"><b id="sWait">0</b><span>waiting on you</span></div>
+    <div class="stat"><b id="sIgnored">0</b><span>non-Shopify emails ignored</span></div>
+  </section>
+
+  <div class="grid">
+    <div class="side">
+      <section class="panel">
+        <div class="panel-head"><h2>Customer emails</h2></div>
+        <ul class="list" id="list"></ul>
+        <p class="empty" id="listEmpty" hidden>No customer emails yet. New ones show up here within a minute of arriving.</p>
+      </section>
+      <details class="panel" id="ignoredBox">
+        <summary>Ignored emails</summary>
+        <ul class="plain" id="ignoredList"></ul>
+      </details>
+    </div>
+    <div class="side">
+      <section class="panel"><div class="thread" id="thread"></div></section>
+      <details class="panel" id="settingsBox">
+        <summary>Store settings and what the assistant is told</summary>
+        <form class="form" id="settingsForm">
+          <div class="two">
+            <div class="field"><label class="label" for="sName">Store name</label><input id="sName" maxlength="80"></div>
+            <div class="field"><label class="label" for="sTone">Tone of voice</label><input id="sTone" maxlength="200"></div>
+          </div>
+          <div class="field"><label class="label" for="sUrl">Store link</label>
+            <div class="inline"><input id="sUrl" placeholder="https://yourstore.com"><button type="button" class="btn" id="readStore">Read my store</button></div>
+            <p class="hint" id="factsHint"></p></div>
+          <div class="field"><label class="label" for="sPolicies">Your rules and policies</label><textarea id="sPolicies" rows="8"></textarea>
+            <p class="hint">The assistant only promises what is written here. Add your discount code here if you want it to hand one out.</p></div>
+          <div class="field"><label class="label" for="sFacts">What it knows from your website</label><textarea id="sFacts" rows="8"></textarea></div>
+          <p class="error" id="settingsError" role="alert" hidden></p>
+          <div class="actions"><button class="btn primary" type="submit">Save settings</button><button type="button" class="btn danger" id="disconnect">Disconnect this inbox</button></div>
+        </form>
+      </details>
+    </div>
+  </div>
+</main>
+<div class="toast" id="toast" role="status" hidden></div>
+<script src="/app.js" type="module"></script>
+</body>
+</html>
